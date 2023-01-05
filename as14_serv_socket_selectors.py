@@ -19,8 +19,8 @@ selector.register(server_socket, selectors.EVENT_READ)
 while True:
     events: List[Tuple[SelectorKey, int]] = selector.select(timeout=1)
 
-    if len(events) == 0:
-        print('Событий нет, подожду еще!')
+    # if len(events) == 0:
+    #     print('Событий нет, подожду еще!')
 
     for event, _ in events:
         event_socket = event.fileobj
@@ -34,3 +34,5 @@ while True:
             data = event_socket.recv(1024)
             print(f"клиентский сокет. Получены данные: {data}")
             event_socket.send(data)
+            # selector.unregister(event_socket)  # непонятно - почему то тут перестаёт работать
+            # event_socket.close()
