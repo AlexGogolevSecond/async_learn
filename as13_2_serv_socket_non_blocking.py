@@ -11,7 +11,7 @@ server_socket.listen()
 print('после listen()')
 server_socket.setblocking(False)  # Пометить серверный сокет как неблокирующий
 
-connections = []
+connections = []  # comment
 
 try:
     while True:
