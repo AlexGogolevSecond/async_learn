@@ -11,25 +11,31 @@ server_socket.listen()
 print('после listen()')
 server_socket.setblocking(False)  # Пометить серверный сокет как неблокирующий
 
-connections = []  # comment 123
+connections = []
 
 try:
     while True:
-        connection, client_address = server_socket.accept()
-        connection.setblocking(False)  # Пометить клиентский сокет как неблокирующий
-        print(f'Получен запрос на подключение от: {client_address}!')
-        connections.append(connection)
+        try:
+            connection, client_address = server_socket.accept()
+            connection.setblocking(False)  # Пометить клиентский сокет как неблокирующий
+            print(f'Получен запрос на подключение от: {client_address}!')
+            connections.append(connection)
+        except BlockingIOError:
+            pass
 
         for connection in connections:
-            buffer = b''
-            while buffer[-1:] != b'\n':
-                data = connection.recv(2)
-                if not data:
-                    break
-                else:
-                    print(f'Получены данные: {data}')
-                    buffer += data
-            print(f"Все данные: {buffer}")
-            connection.send(b'response: ' + buffer)
+            try:
+                buffer = b''
+                while buffer[-1:] != b'\n':
+                    data = connection.recv(2)
+                    if not data:
+                        break
+                    else:
+                        print(f'Получены данные: {data}')
+                        buffer += data
+                print(f"Все данные: {buffer}")
+                connection.send(b'response: ' + buffer)
+            except BlockingIOError:
+                pass
 finally:
     server_socket.close()
