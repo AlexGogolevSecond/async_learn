@@ -9,6 +9,7 @@ async def echo(connection: socket, loop: AbstractEventLoop) -> None:
 
 
 async def listen_for_connection(server_socket: socket, loop: AbstractEventLoop):
+    print('вошли в listen_for_connection')
     while True:
         connection, address = await loop.sock_accept(server_socket)
         connection.setblocking(False)
@@ -24,6 +25,7 @@ async def main():
     server_socket.setblocking(False)
     server_socket.bind(server_address)
     server_socket.listen()
+    print('после server_socket.listen()')
 
     # Запускаем сопрограмму прослушивания порта на предмет подключений
     await listen_for_connection(server_socket, asyncio.get_event_loop())
