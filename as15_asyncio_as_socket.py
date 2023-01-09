@@ -1,15 +1,20 @@
 import asyncio
 import socket
 from asyncio import AbstractEventLoop
+import logging
 
 
 async def echo(connection: socket, loop: AbstractEventLoop) -> None:
-    while data := await loop.sock_recv(connection, 1024):  # В бесконечном цикле ожидаем данных от клиента
-        # print(data)
-        if data == b'boom':
-            raise Exception("Неожиданная ошибка сети")
-        await loop.sock_sendall(connection, data)  # Получив данные, отправляем их обратно клиенту
-
+    try:
+        while data := await loop.sock_recv(connection, 1024):  # В бесконечном цикле ожидаем данных от клиента
+            # print(data)
+            if data == b'boom':
+                raise Exception("Неожиданная ошибка сети")
+            await loop.sock_sendall(connection, data)  # Получив данные, отправляем их обратно клиенту
+    except Exception as ex:
+        logging.exception(ex)
+    finally:
+        connection.close()
 
 async def listen_for_connection(server_socket: socket, loop: AbstractEventLoop):
     print('вошли в listen_for_connection')
