@@ -1,5 +1,5 @@
 import asyncio
-from async_learn import delay
+from delay_functions import delay
 
 
 async def add_one(number: int) -> int:

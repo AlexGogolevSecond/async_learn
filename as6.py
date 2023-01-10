@@ -1,6 +1,6 @@
 """тут будем отменять задачи"""
 import asyncio
-from async_learn import delay
+from delay_functions import delay
 from random import randint
 from asyncio import CancelledError
 
