@@ -4,16 +4,15 @@ from asyncio import AbstractEventLoop
 import logging
 
 
-tasks = []
-
 async def echo(connection: socket, loop: AbstractEventLoop) -> None:
     try:
         while data := await loop.sock_recv(connection, 1024):  # В бесконечном цикле ожидаем данных от клиента
-            # print(data)
-            if data == b'boom':
+            print(data)
+            if data == b'boom\n':
                 raise Exception("Неожиданная ошибка сети")
             await loop.sock_sendall(connection, data)  # Получив данные, отправляем их обратно клиенту
     except Exception as ex:
+        print(ex)
         logging.exception(ex)
     finally:
         connection.close()
@@ -25,7 +24,7 @@ async def listen_for_connection(server_socket: socket, loop: AbstractEventLoop):
         connection.setblocking(False)
         print(f"Получен запрос на подключение от {address}")
         # После получения запроса на подключение создаем задачу echo, ожидающую данные от клиента
-        tasks.append(asyncio.create_task(echo(connection, loop)))
+        asyncio.create_task(echo(connection, loop))
 
 
 async def main():
