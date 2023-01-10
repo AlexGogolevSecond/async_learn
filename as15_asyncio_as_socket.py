@@ -12,6 +12,7 @@ async def echo(connection: socket, loop: AbstractEventLoop) -> None:
                 raise Exception("Неожиданная ошибка сети")
             await loop.sock_sendall(connection, data)  # Получив данные, отправляем их обратно клиенту
     except Exception as ex:
+        print(ex)
         logging.exception(ex)
     finally:
         connection.close()
