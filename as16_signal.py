@@ -1,7 +1,7 @@
 import asyncio, signal
 from asyncio import AbstractEventLoop
 from typing import Set
-from async_learn import delay
+from delay_functions import delay
 
 
 def cancel_tasks():
@@ -17,4 +17,3 @@ async def main():
     await delay(10)
 
 asyncio.run(main())
-
