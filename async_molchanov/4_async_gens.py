@@ -16,7 +16,7 @@ def server():
         yield ('read', server_socket)
         client_socket, addr = server_socket.accept()  # read
         print('connection from', addr)
-        client(client_socket)
+        tasks.append(client(client_socket))
 
 
 def client(client_socket):
