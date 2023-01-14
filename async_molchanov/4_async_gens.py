@@ -55,8 +55,9 @@ def event_loop():
                 to_read[sock] = task
             if reason == 'write':
                 to_write[sock] = task
-        except:
-            pass
+        except StopIteration:
+            print('Done!')
 
 
 tasks.append(server())
+event_loop()
