@@ -9,7 +9,7 @@ to_write = {}
 def server():
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    server_socket.bind(('127.0.0.1', 18000))
+    server_socket.bind(('127.0.0.1', 8000))
     server_socket.listen()
 
     while True:
