@@ -1,7 +1,7 @@
 
 
 def subgen():
-    message= yield
+    message = yield
     print('Subgen received:', message)
 
 
