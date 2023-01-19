@@ -20,5 +20,3 @@ def average():
             count += 1
             summ += x
             average = round(summ / count, 2)
-
-
